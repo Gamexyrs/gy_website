@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <title>跳转确认</title>
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+      background: #f4f6fa;
+      color: #16191f;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue",
+                   "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 24px 26px;
+      border: 1px solid #e3e8f0;
+      border-radius: 16px;
+      background: #ffffff;
+      text-align: center;
+      box-shadow: 0 6px 24px -12px rgba(22, 25, 31, 0.14);
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: #eef4ff;
+      color: #2f6df6;
+      font-size: 22px;
+      line-height: 46px;
+    }
+
+    .title {
+      margin: 0 0 10px;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .lead {
+      margin: 0 0 18px;
+      color: #6b7382;
+      font-size: 14px;
+    }
+
+    .domain {
+      display: block;
+      margin: 0 0 22px;
+      padding: 11px 14px;
+      border: 1px dashed #d5dbe6;
+      border-radius: 10px;
+      background: #f8fafc;
+      color: #2f6df6;
+      font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 13.5px;
+      word-break: break-all;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      border: 0;
+      border-radius: 12px;
+      background: #2f6df6;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn:active {
+      background: #2459d0;
+      transform: scale(0.985);
+    }
+
+    .note {
+      margin: 16px 0 0;
+      color: #98a0ad;
+      font-size: 12px;
+    }
+
+    .empty .icon {
+      background: #f3f4f6;
+      color: #9aa1ad;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card" id="card">
+    <div class="icon" id="icon">→</div>
+    <h1 class="title" id="title">链接不存在</h1>
+    <p class="lead" id="lead">该跳转链接无效或已失效</p>
+    <code class="domain" id="domain" hidden></code>
+    <button class="btn" id="btn" hidden>继续前往</button>
+    <p class="note" id="note" hidden>即将离开本站，请在新的页面中完成操作</p>
+  </div>
+
+  <script>
+    var TARGETS = {
+      psy: {
+        title: "心理咨询预约",
+        url: "https://www.psy.com.cn/m/vant/#/school/322525/student/login"
+      },
+      pano: {
+        title: "全景地图",
+        url: "https://8b2fecdr1.wasee.com/wt/8b2fecdr1"
+      }
+    };
+
+    function getParam(name) {
+      var m = new RegExp("[?&]" + name + "=([^&#]*)").exec(window.location.search);
+      return m ? decodeURIComponent(m[1]) : "";
+    }
+
+    function getHost(url) {
+      var a = document.createElement("a");
+      a.href = url;
+      return a.hostname;
+    }
+
+    var key = getParam("to");
+    var item = Object.prototype.hasOwnProperty.call(TARGETS, key) ? TARGETS[key] : null;
+
+    var card = document.getElementById("card");
+    var icon = document.getElementById("icon");
+    var title = document.getElementById("title");
+    var lead = document.getElementById("lead");
+    var domain = document.getElementById("domain");
+    var btn = document.getElementById("btn");
+    var note = document.getElementById("note");
+
+    if (!item) {
+      card.className = "card empty";
+      icon.textContent = "!";
+      title.textContent = "链接不存在";
+      lead.textContent = "该跳转链接无效或已失效";
+    } else {
+      document.title = item.title;
+      title.textContent = item.title;
+      lead.textContent = "你即将前往以下站点";
+      domain.textContent = getHost(item.url);
+      domain.hidden = false;
+      btn.textContent = "前往 " + getHost(item.url);
+      btn.hidden = false;
+      note.hidden = false;
+      btn.onclick = function () {
+        window.location.href = item.url;
+      };
+    }
+  </script>
+</body>
+</html>
