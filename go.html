@@ -5,7 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no">
   <title>跳转确认</title>
+  <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0d13" media="(prefers-color-scheme: dark)">
   <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f6fa;
+      --card: #ffffff;
+      --border: #e3e8f0;
+      --text: #16191f;
+      --text-dim: #6b7382;
+      --text-faint: #98a0ad;
+      --accent: #2f6df6;
+      --accent-active: #2459d0;
+      --accent-on: #ffffff;
+      --icon-bg: #eef4ff;
+      --block-bg: #f8fafc;
+      --block-border: #d5dbe6;
+      --shadow: 0 6px 24px -12px rgba(22, 25, 31, 0.14);
+      --empty-bg: #f3f4f6;
+      --empty-fg: #9aa1ad;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0d13;
+        --card: #141922;
+        --border: #242c39;
+        --text: #e8eefb;
+        --text-dim: #97a3b8;
+        --text-faint: #64708a;
+        --accent: #5b9bff;
+        --accent-active: #7db1ff;
+        --accent-on: #08111f;
+        --icon-bg: rgba(91, 155, 255, 0.14);
+        --block-bg: rgba(255, 255, 255, 0.045);
+        --block-border: #2c3542;
+        --shadow: 0 6px 24px -12px rgba(0, 0, 0, 0.55);
+        --empty-bg: rgba(255, 255, 255, 0.06);
+        --empty-fg: #8b93a3;
+      }
+    }
+
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     html, body {
@@ -19,22 +60,24 @@
       align-items: center;
       justify-content: center;
       padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
-      background: #f4f6fa;
-      color: #16191f;
+      background: var(--bg);
+      color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue",
                    "Microsoft YaHei", sans-serif;
       line-height: 1.6;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     .card {
       width: 100%;
       max-width: 420px;
       padding: 32px 24px 26px;
-      border: 1px solid #e3e8f0;
+      border: 1px solid var(--border);
       border-radius: 16px;
-      background: #ffffff;
+      background: var(--card);
       text-align: center;
-      box-shadow: 0 6px 24px -12px rgba(22, 25, 31, 0.14);
+      box-shadow: var(--shadow);
+      transition: background-color 0.25s ease, border-color 0.25s ease;
     }
 
     .icon {
@@ -42,10 +85,11 @@
       height: 46px;
       margin: 0 auto 16px;
       border-radius: 50%;
-      background: #eef4ff;
-      color: #2f6df6;
+      background: var(--icon-bg);
+      color: var(--accent);
       font-size: 22px;
       line-height: 46px;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     .title {
@@ -57,7 +101,7 @@
 
     .lead {
       margin: 0 0 18px;
-      color: #6b7382;
+      color: var(--text-dim);
       font-size: 14px;
     }
 
@@ -65,13 +109,14 @@
       display: block;
       margin: 0 0 22px;
       padding: 11px 14px;
-      border: 1px dashed #d5dbe6;
+      border: 1px dashed var(--block-border);
       border-radius: 10px;
-      background: #f8fafc;
-      color: #2f6df6;
+      background: var(--block-bg);
+      color: var(--accent);
       font-family: "SFMono-Regular", Menlo, Consolas, monospace;
       font-size: 13.5px;
       word-break: break-all;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
     }
 
     .btn {
@@ -80,29 +125,29 @@
       padding: 14px 16px;
       border: 0;
       border-radius: 12px;
-      background: #2f6df6;
-      color: #ffffff;
+      background: var(--accent);
+      color: var(--accent-on);
       font-size: 16px;
       font-weight: 500;
       font-family: inherit;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.15s ease;
+      transition: background-color 0.2s ease, transform 0.15s ease;
     }
 
     .btn:active {
-      background: #2459d0;
+      background: var(--accent-active);
       transform: scale(0.985);
     }
 
     .note {
       margin: 16px 0 0;
-      color: #98a0ad;
+      color: var(--text-faint);
       font-size: 12px;
     }
 
     .empty .icon {
-      background: #f3f4f6;
-      color: #9aa1ad;
+      background: var(--empty-bg);
+      color: var(--empty-fg);
     }
   </style>
 </head>
